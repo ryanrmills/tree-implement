@@ -1,9 +1,9 @@
 public class TreeNode {
-    public int data;
+    public int value;
     public TreeNode left;
     public TreeNode right;
     
-    public TreeNode(int data){
-        this.data = data;
+    public TreeNode(int value){
+        this.value = value;
     }
 }

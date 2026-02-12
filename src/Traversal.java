@@ -2,7 +2,7 @@ public class Traversal {
   public static void main(String[] args) {
     TreeNode rooot = new TreeNode(10);
 
-    System.out.println(rooot.data);
+    System.out.println(rooot.value);
 
     rooot.left = new TreeNode(9);
     rooot.right = new TreeNode(15);
@@ -22,7 +22,7 @@ public class Traversal {
       return;
     }
 
-    System.out.println(current1.data);
+    System.out.println(current1.value);
 
     if (current1.left != null){
       preOrder(current1.left);
