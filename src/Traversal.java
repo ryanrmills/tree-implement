@@ -14,9 +14,11 @@ public class Traversal {
     rooot.right.right = new TreeNode(5);
 
     rooot.right.right.right = new TreeNode(22);
+
+    preorder(rooot);
   }
 
-  public static void preOrder(TreeNode current1){
+  public static void preorder(TreeNode current1){
 
     if (current1 == null){
       return;
@@ -25,11 +27,11 @@ public class Traversal {
     System.out.println(current1.value);
 
     if (current1.left != null){
-      preOrder(current1.left);
+      preorder(current1.left);
     }
 
     if (current1.right != null){
-      preOrder(current1.right);
+      preorder(current1.right);
     }
 
   }
