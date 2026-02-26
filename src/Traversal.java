@@ -1,17 +1,23 @@
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Stack;
+
 public class Traversal {
   public static void main(String[] args) {
-    TreeNode<Integer> rooot = new TreeNode<>(10, null, null);
+    TreeNode<Integer> root = new TreeNode<>(10, null, null);
 
-    rooot.left = new TreeNode<>(9, null, null);
-    rooot.right = new TreeNode<>(15, null, null);
+    root.left = new TreeNode<>(9, null, null);
+    root.right = new TreeNode<>(15, null, null);
 
-    rooot.left.left = new TreeNode<>(5, null, null);
-    rooot.left.right = new TreeNode<>(2, null, null);
+    root.left.left = new TreeNode<>(5, null, null);
+    root.left.right = new TreeNode<>(2, null, null);
 
-    rooot.right.left = new TreeNode<>(-3, null, null);
-    rooot.right.right = new TreeNode<>(5, null, null);
+    root.right.left = new TreeNode<>(-3, null, null);
+    root.right.right = new TreeNode<>(5, null, null);
 
-    rooot.right.right.right = new TreeNode<>(22, null, null);
+    root.right.right.right = new TreeNode<>(22, null, null);
 
     TreeNode<String> stringRoot = new TreeNode<String>("hello", null, null);
     stringRoot.left = new TreeNode<String>("how", null, null);
@@ -25,13 +31,84 @@ public class Traversal {
 
     stringRoot.right.right.right = new TreeNode<String>("good", null, null);
 
-    // preorder(rooot);
-    //postorder(rooot);
+    TreeNode<Integer> megaRoot = new TreeNode<>(1, null, null);
+
+    TreeNode<Integer> current = megaRoot;
+    for (int i = 2; i < 50001; i++){
+      current.right = new TreeNode<Integer>(i, null, null);
+      current = current.right;
+    }
+
+    levelOrder(root);
+    //preorder(megaRoot);
+
+    // System.out.println("Preorder recursive");
+    // preorder(root);
+    // System.out.println("Preorder iterative");
+    // preOrderIter(megaRoot);
+
+    // preorder(root);
+    //postorder(root);
     // inorder(stringRoot);
 
     //allows it to fail at compile time rather than runtime
-    printGreater(rooot, 100);
+    // printGreater(root, 100);
+
+    // System.out.println(toMap(stringRoot));
+  }
+
+  public static <T> void preOrderIter(TreeNode<T> node){
+    Stack<TreeNode<T>> stack = new Stack<>();
+    stack.push(node);
     
+    while (!stack.empty()){
+        TreeNode<T> current = stack.pop();
+        if (current == null) continue;
+        System.out.println(current.value);
+        stack.push(current.right);
+        stack.push(current.left);
+    }
+  }
+
+  public static <T> void levelOrder(TreeNode<T> node){
+    Queue<TreeNode<T>> queue = new LinkedList<>();
+    queue.add(node);
+
+    while (!queue.isEmpty()){
+      TreeNode<T> current = queue.poll();
+      if (current == null){
+        continue;
+      }
+
+      System.out.println(current.value);
+      queue.add(current.left);
+      queue.add(current.right);
+    }
+  }
+
+  public static <E> void preorder(TreeNode<E> current1){
+
+    if (current1 == null) return;
+
+    System.out.println(current1.value);
+
+    if (current1.left != null) preorder(current1.left);
+
+    if (current1.right != null) preorder(current1.right);
+  }
+
+  public static <T> Map<T, Integer> toMap(TreeNode<T> node){
+    Map<T, Integer> counts = new HashMap<>();
+    toMapHelper(node, counts);
+    return counts;
+  }
+
+  private static <T> void toMapHelper(TreeNode<T> node, Map<T, Integer> counts){
+    if (node == null) return;
+
+    counts.put(node.value, counts.getOrDefault(node.value, 0) + 1);
+    toMapHelper(node.left, counts);
+    toMapHelper(node.right, counts);
   }
 
   public static int countNodes(TreeNode<?> node){
@@ -57,24 +134,6 @@ public class Traversal {
     postorder(node.left);
     postorder(node.right);
     System.out.println(node.value);
-  }
-
-  public static <E> void preorder(TreeNode<E> current1){
-
-    if (current1 == null){
-      return;
-    }
-
-    System.out.println(current1.value);
-
-    if (current1.left != null){
-      preorder(current1.left);
-    }
-
-    if (current1.right != null){
-      preorder(current1.right);
-    }
-
   }
 
   public static <T> void inorder(TreeNode<T> node){
